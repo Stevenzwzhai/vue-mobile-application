@@ -1,0 +1,13 @@
+body{
+	margin:0 !important;
+	padding:0 !important;
+	font-size: 0.28rem;
+}
+*{
+	
+}
+ul, li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
