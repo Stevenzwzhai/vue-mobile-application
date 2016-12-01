@@ -15,22 +15,24 @@
             <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
                 <ul class="list">
                     <li v-for="item in list" class="default-icon-more">
-                        <p>
-                            <span class="title1">{{item.faccountname}}{{item.fcurrencynumber}}</span>
-                            <span class="title2">借贷方向：{{parseInt(item.fdc)?"贷方":"借方"}}</span>
-                        </p>
-                        <p>
-                            <span class="span1">期初余额：</span>
-                            <span class="span2">{{item.fbeginbalancefor}}</span>
-                            <span class="span1">期末余额：</span>
-                            <span class="span2">{{item.fendbalancefor}}</span>
-                        </p>
-                        <p>
-                            <span class="span1">本期借方：</span>
-                            <span class="span2">{{item.fdebit}}</span>
-                            <span class="span1">本期贷方：</span>
-                            <span class="span2">{{item.fcredit}}</span>
-                        </p>
+                        <router-link :to="'/detail/'+item.faccountid">
+                            <p>
+                                <span class="title1">{{item.faccountname}}{{item.fcurrencynumber}}</span>
+                                <span class="title2">借贷方向：{{parseInt(item.fdc)?"贷方":"借方"}}</span>
+                            </p>
+                            <p>
+                                <span class="span1">期初余额：</span>
+                                <span class="span2">{{item.fbeginbalancefor}}</span>
+                                <span class="span1">期末余额：</span>
+                                <span class="span2">{{item.fendbalancefor}}</span>
+                            </p>
+                            <p>
+                                <span class="span1">本期借方：</span>
+                                <span class="span2">{{item.fdebit}}</span>
+                                <span class="span1">本期贷方：</span>
+                                <span class="span2">{{item.fcredit}}</span>
+                            </p>
+                        </router-link>
                     </li>
                 </ul>
             </mt-loadmore>
@@ -204,6 +206,7 @@ export default {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                color:#000;
             }
     .content .list li .title1 {
                 width: 60%;

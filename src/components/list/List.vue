@@ -1,7 +1,7 @@
 <template>
     <div id='list'>
         <keep-alive>
-          <component :is="currentView" @changeView="change" :data-list="list" :currency-list="currencyList">
+          <component :is="currentView" @changeView="change">
             <!-- 非活动组件将被缓存！ -->
           </component>
         </keep-alive>
@@ -21,8 +21,7 @@ export default{
     data(){
         return {
             currentView:'MainList',
-            list:[],
-            currencyList:[]
+            
         }
     },
     methods:{
