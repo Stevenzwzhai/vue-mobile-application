@@ -1,4 +1,4 @@
-# scroll
+# vue-mobile-application
 
 > vue-component
 
@@ -14,5 +14,4 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+use vue2.0,vue-router2.0,axios,mint-ui2.0
