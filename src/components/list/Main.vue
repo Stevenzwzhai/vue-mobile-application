@@ -2,7 +2,7 @@
     <div id='main'>
         <div class="header">
             <div class="search">
-                <mt-search v-model="value" cancel-text="取消" placeholder="科目名称代码|核算项目名称代码"></mt-search>
+                <mt-search v-model="value" placeholder="科目名称代码|核算项目名称代码"></mt-search>
             </div>
             <div class="date">
                 <input type="text" class="date-picker" v-model="begindate" @click="openPicker('begin')" readonly="readonly">
@@ -11,32 +11,7 @@
                 <mt-button type="primary" size="small" @click="changeAction">高级</mt-button>
             </div>
         </div>
-       <div class="content">
-            <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-                <ul class="list">
-                    <li v-for="item in list" class="default-icon-more">
-                        <router-link :to="'/detail/'+item.faccountid">
-                            <p>
-                                <span class="title1">{{item.faccountname}}{{item.fcurrencynumber}}</span>
-                                <span class="title2">借贷方向：{{parseInt(item.fdc)?"贷方":"借方"}}</span>
-                            </p>
-                            <p>
-                                <span class="span1">期初余额：</span>
-                                <span class="span2">{{item.fbeginbalancefor}}</span>
-                                <span class="span1">期末余额：</span>
-                                <span class="span2">{{item.fendbalancefor}}</span>
-                            </p>
-                            <p>
-                                <span class="span1">本期借方：</span>
-                                <span class="span2">{{item.fdebit}}</span>
-                                <span class="span1">本期贷方：</span>
-                                <span class="span2">{{item.fcredit}}</span>
-                            </p>
-                        </router-link>
-                    </li>
-                </ul>
-            </mt-loadmore>
-       </div>
+        <ContentList></ContentList>
         <mt-datetime-picker v-model="pickerVisible" ref="picker" type="date"  year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleConfirm">
         </mt-datetime-picker>
 
@@ -44,37 +19,16 @@
 </template>
 
 <script>
-import API from '../../api/API'
-const api = new API();
-import { Indicator } from 'mint-ui'
-import {Toast} from 'mint-ui'
+import ContentList from './Content.vue'
 
 export default {
     beforeMount(){
-        Indicator.open({
-            text: '加载中...',
-            spinnerType: 'triple-bounce'
-        });
-        let that = this;
-        //获取信息列表
-        let response = api.getList({ "StartYear": "2016", "EndYear": "2016", "StartPeriod": "02", "EndPeriod": "02", "CurrencyID": "1", "AcctLevel": "1", "StartAccount": "", "EndAccount": "", "keyword": "", "userid": "19394", "bUnposted": "1", "bViewItem": "0", "bNoUnUsed": "1", "bNoZeroBal": "1", "acctgroupname": "全部" });
-        console.log(response);
-        response.then(function(res){
-                let data = JSON.parse(res.data.DataJson).Data.datalist;
-                Indicator.close();
-                that.list = data;
-            })
-            .catch(function(err){
-                console.log(err);
-            });
-
+        
     },
     data () {
         return {
             value: '',
             pickerVisible:new Date(),
-            list:[],
-            allLoaded:true,
             pickerBegin:new Date(),
             pickerEnd:new Date(),
             currentPicker:null,
@@ -95,7 +49,9 @@ export default {
             return pickerDate.getFullYear()+"年"+parseInt(parseInt(pickerDate.getMonth())+1)+"期"
         }
     },
-    
+    components:{
+        ContentList
+    },
     methods:{
         openPicker(currentPicker) {
             this.$refs.picker.open();
@@ -112,26 +68,8 @@ export default {
         changeAction () {
             let view = "DialogChose";
             this.$emit('changeView', view);
-        },
-        loadTop (id){
-            let that = this;
-            let response = api.getList({ "StartYear": "2016", "EndYear": "2016", "StartPeriod": "02", "EndPeriod": "02", "CurrencyID": "1", "AcctLevel": "1", "StartAccount": "", "EndAccount": "", "keyword": "", "userid": "19394", "bUnposted": "1", "bViewItem": "0", "bNoUnUsed": "1", "bNoZeroBal": "1", "acctgroupname": "全部" });
-            response.then(function(res){
-                    // console.log('res');
-                    let data = JSON.parse(res.data.DataJson).Data.datalist;
-                    that.list = data;
-                    that.$refs.loadmore.onTopLoaded(id);
-                })
-                .catch(function(err){
-                    // console.log(err);
-                });
-        },
-        loadBottom () {
-
-        },
-        handleTopChange (status) {
-            console.log(status);
         }
+        
     }
 }
 </script>
