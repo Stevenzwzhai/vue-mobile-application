@@ -2,7 +2,7 @@ import Qs from 'qs'
 export default{
 
 	  url: '/route',
-	  baseURL: 'http://119.29.169.16/Webapi/',
+	  baseURL: 'http:....',
 	  method:'POST',
 	  
 	  transformRequest: [function (data) {
