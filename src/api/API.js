@@ -5,7 +5,7 @@ import qs from 'qs'
 // axios(config);
 class API {
 	getList (param) {
-		config.data.Method="kis.APP003678.ueanalysis.UEStockAnalysis.GetAcctBalance";
+		config.data.Method="get";
 		config.data.CustData.Data = param;
 		return axios.post('/Router',{},config);
 	}
@@ -13,7 +13,7 @@ class API {
 		console.log(config);
 		var commonData = Object.create(config);
 		
-		config.data.Method="kis.APP003678.ueanalysis.UEStockAnalysis.GetCurrencyList";
+		config.data.Method="get";
 		config.data.CustData.Data = param;
 		return axios.post('/Router',{},config);
 	}
